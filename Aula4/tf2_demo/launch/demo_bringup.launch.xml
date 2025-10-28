@@ -1,0 +1,29 @@
+<launch>
+    <arg name="config" default="false"/>
+    
+    <!-- Publica um frame estático -->
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="frame_b_publisher"
+        args="--frame-id map --child-frame-id center --z 1 --roll 1.570796"
+    />
+
+    <node pkg="tf2_demo" 
+          exec="drone_tf_pub" 
+          name="drone_frame_publisher">
+    </node>
+
+    <node pkg="tf2_demo" 
+          exec="static_cargo_pub" 
+          name="cargo_static_tf_publisher" args="drone_frame cargo_frame -0.5">
+    </node>
+
+    <node pkg="tf2_demo" 
+          exec="cargo_pubsub" 
+          name="cargo_dynamic_tf_publisher">
+    </node>
+    
+    <include file="$(find-pkg-share tf2_demo)/launch/static_frames.launch.xml"/>
+
+    <!-- Chama o Rviz e carrega o arquivo de configuração dele -->
+	<node if="$(var config)" name="rviz" pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share tf2_demo)/rviz/frame_demo.rviz -f map"/>
+	<node unless="$(var config)" name="rviz" pkg="rviz2" exec="rviz2" args="-f map"/>
+</launch>

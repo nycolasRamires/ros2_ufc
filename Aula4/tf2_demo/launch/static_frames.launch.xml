@@ -1,0 +1,15 @@
+<launch>
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="frame_a_publisher"
+        args="--frame-id map --child-frame-id frame_a"
+    />
+
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="frame_b_publisher"
+        args="--frame-id frame_a --child-frame-id frame_b --x 3 --yaw 3.141592"
+    />
+
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="frame_c_publisher"
+        args="--frame-id frame_b --child-frame-id frame_c --z 2 --qx 0.6830127 --qy 0.1830127 --qz -0.6830127 --qw 0.1830127"/>
+
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="frame_d_publisher"
+        args="--frame-id frame_b --child-frame-id frame_d --x 2 --y -2 --roll 1.570796"/>
+</launch>
