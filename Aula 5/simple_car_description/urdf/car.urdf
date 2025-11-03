@@ -219,54 +219,61 @@
     <transmission name="front_left_steering_trans">
         <type>transmission_interface/SimpleTransmission</type>
         <actuator name="front_left_motor">
-        <hardwareInterface>hardware_interface/Position</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+            <hardwareInterface>hardware_interface/Position</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
         </actuator>
         <joint name="front_left_steer_joint">
-        <hardwareInterface>hardware_interface/Position</hardwareInterface>
+            <hardwareInterface>hardware_interface/Position</hardwareInterface>
         </joint>
     </transmission>
 
     <transmission name="front_right_steering_trans">
         <type>transmission_interface/SimpleTransmission</type>
         <actuator name="front_right_motor">
-        <hardwareInterface>hardware_interface/Position</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+            <hardwareInterface>hardware_interface/Position</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
         </actuator>
         <joint name="front_right_steer_joint">
-        <hardwareInterface>hardware_interface/Position</hardwareInterface>
+            <hardwareInterface>hardware_interface/Position</hardwareInterface>
         </joint>
     </transmission>
 
-    <ros2_control name="SimpleCarHardware" type="system">
+    <ros2_control name="MockSystem" type="system">
         <hardware>
-            <plugin>simple_car_hardware/SimpleCarHardware</plugin>
+            <plugin>mock_components/GenericSystem</plugin>
+            <param name="mock_sensor_commands">true</param>
         </hardware>
 
         <joint name="front_left_steer_joint">
-            <command_interface name="position"/>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
         </joint>
-
         <joint name="front_right_steer_joint">
-            <command_interface name="position"/>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
         </joint>
-
         <joint name="front_left_wheel_joint">
-            <command_interface name="velocity"/>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
+            <command_interface name="velocity" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
         </joint>
-
         <joint name="front_right_wheel_joint">
-            <command_interface name="velocity"/>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
+            <command_interface name="velocity" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
         </joint>
-
+        <joint name="rear_left_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="rear_right_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
     </ros2_control>
 
 </robot>

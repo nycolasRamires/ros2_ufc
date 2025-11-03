@@ -9,6 +9,7 @@
   </node>
 
   <!-- Carrega e ativa o controlador de posição -->
+   
   <node
     pkg="controller_manager"
     exec="spawner"
@@ -38,12 +39,12 @@
     </node>
 
   <!-- joint_state_publisher_gui -->
-    <node pkg="joint_state_publisher_gui"
+    <!-- <node pkg="joint_state_publisher_gui"
             exec="joint_state_publisher_gui"
             name="joint_state_publisher_gui"
             output="screen">
         <param name="use_gui" value="true"/>
-    </node>
+    </node> -->
 
   <!-- RViz -->
     <node pkg="rviz2"
