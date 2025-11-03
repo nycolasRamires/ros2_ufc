@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!-- Simple car model: base_link with four wheels. Wheels are connected via continuous joints so joint_state_publisher can animate them. -->
+<robot name="simple_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- macro: simple_cylinder_link(name, length, radius, mass) -->
+  <xacro:macro name="simple_cylinder_link" params="name length radius mass">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <!-- Base chassis -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="10.0"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.8 0.5 0.15"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0.2 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 0.5 0.15"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- wheel macro: creates wheel link and a continuous joint to parent -->
+  <xacro:macro name="wheel" params="name parent xyz rpy radius width">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder length="${width}" radius="${radius}"/>
+        </geometry>
+        <!-- rotate cylinder so axis aligns with wheel axis -->
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${width}" radius="${radius}"/>
+        </geometry>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      </collision>
+      <inertial>
+        <mass value="1.0"/>
+        <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+      </inertial>
+    </link>
+
+    <!-- continuous joint so joint_state_publisher can move it -->
+    <joint name="${name}_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${name}"/>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- instantiate four wheels -->
+  <!-- front_left -->
+  <xacro:wheel name="front_left_wheel" parent="base_link" xyz="0.25 0.20 -0.05" rpy="0 0 0" radius="0.06" width="0.04"/>
+  <!-- front_right -->
+  <xacro:wheel name="front_right_wheel" parent="base_link" xyz="0.25 -0.20 -0.05" rpy="0 0 0" radius="0.06" width="0.04"/>
+  <!-- rear_left -->
+  <xacro:wheel name="rear_left_wheel" parent="base_link" xyz="-0.25 0.20 -0.05" rpy="0 0 0" radius="0.06" width="0.04"/>
+  <!-- rear_right -->
+  <xacro:wheel name="rear_right_wheel" parent="base_link" xyz="-0.25 -0.20 -0.05" rpy="0 0 0" radius="0.06" width="0.04"/>
+
+</robot>

@@ -1,0 +1,55 @@
+<launch>
+  <!-- Inicia o controller_manager com o arquivo de configuração -->
+  <node
+    name="controller_manager"
+    pkg="controller_manager"
+    exec="ros2_control_node"
+    output="screen"
+    args="--ros-args --params-file $(find-pkg-share simple_car_description)/config/car_control.yaml">
+  </node>
+
+  <!-- Carrega e ativa o controlador de posição -->
+  <node
+    pkg="controller_manager"
+    exec="spawner"
+    args="forward_position_controller --controller-manager /controller_manager"
+    output="screen" />
+
+  <!-- Carrega joint state broadcaster -->
+  <node
+    pkg="controller_manager"
+    exec="spawner"
+    args="joint_state_broadcaster --controller-manager /controller_manager"
+    output="screen" />
+
+  <!-- Nó que publica as ref p/ rodas -->
+  <node
+    pkg="simple_car_description"
+    exec="wheel_ref_publisher"
+    output="screen" />
+
+
+    <node pkg="robot_state_publisher"
+        exec="robot_state_publisher"
+        name="robot_state_publisher"
+        output="screen">
+      <param name="robot_description"
+           value="$(command 'cat $(find-pkg-share simple_car_description)/urdf/car.urdf')"/>
+    </node>
+
+  <!-- joint_state_publisher_gui -->
+    <node pkg="joint_state_publisher_gui"
+            exec="joint_state_publisher_gui"
+            name="joint_state_publisher_gui"
+            output="screen">
+        <param name="use_gui" value="true"/>
+    </node>
+
+  <!-- RViz -->
+    <node pkg="rviz2"
+            exec="rviz2"
+            name="rviz2"
+            output="screen" />
+
+
+</launch>

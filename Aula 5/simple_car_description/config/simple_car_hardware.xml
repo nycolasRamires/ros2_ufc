@@ -1,0 +1,9 @@
+<library path="simple_car_description_simple_car_hardware">
+  <class name="simple_car_hardware/SimpleCarHardware"
+         type="simple_car_hardware::SimpleCarHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Hardware interface for the simple car.
+    </description>
+  </class>
+</library>
