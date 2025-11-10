@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- robot_state_publisher: carrega o URDF (ou xacro processado) no  robot_description -->
+  <node pkg="robot_state_publisher"
+        exec="robot_state_publisher"
+        name="robot_state_publisher"
+        output="screen">
+    <!-- p/ URDF puro -->
+      <param name="robot_description"
+           value="$(command 'cat $(find-pkg-share urdf_demo)/urdf/braco_r2pr3.urdf')"/>
+  </node>
+
+  <!-- joint_state_publisher_gui -->
+  <node pkg="joint_state_publisher_gui"
+        exec="joint_state_publisher_gui"
+        name="joint_state_publisher_gui"
+        output="screen">
+    <param name="use_gui" value="true"/>
+  </node>
+
+  <!-- RViz: passe o arquivo de configuração diretamente com args -->
+  <node pkg="rviz2"
+        exec="rviz2"
+        name="rviz2"
+        output="screen"
+        args="-d $(find-pkg-share urdf_demo)/rviz/robot_config.rviz -f base_link"/>
+
+</launch>
