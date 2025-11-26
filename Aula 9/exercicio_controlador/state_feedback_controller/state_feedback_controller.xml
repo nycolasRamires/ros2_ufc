@@ -1,0 +1,9 @@
+<library path="state_feedback_controller">
+  <class name="state_feedback_controller/StateFeedbackController"
+    type="state_feedback_controller::StateFeedbackController"
+    base_class_type="controller_interface::ControllerInterface">
+    <description>
+      Controller plugin for state feedback control of cart on 1D track.
+    </description>
+  </class>
+</library>

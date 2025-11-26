@@ -1,0 +1,19 @@
+# Arquivo de parâmetros de configuração de controlador de esforço para o carrinho deslizante. Ganhos foram tunados para evitar sobrepasso de velocidade.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 1000 # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    state_feedback_controller:
+      type: state_feedback_controller/StateFeedbackController
+
+state_feedback_controller:
+  ros__parameters:
+    type: state_feedback_controller/StateFeedbackController
+    joints:
+      - slider_to_cart
+    state_feedback_matrix: [3.1623, 4.0404]
+    priority: 50
